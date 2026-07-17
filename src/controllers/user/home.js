@@ -66,24 +66,18 @@ const getCategories = async (req, res) => {
             const subCourseCount = await Course.countDocuments({
               subCategory: sub._id,
             });
-            const subData = {
+            return {
               ...sub._doc,
+              coursesCount: subCourseCount,
             };
-            if (subCourseCount > 0) {
-              subData.coursesCount = subCourseCount;
-            }
-            return subData;
           })
         );
 
-        const categoryData = {
+        return {
           ...category._doc,
+          coursesCount: categoryCourseCount,
           subCategories: subCategoriesWithCount,
         };
-        if (categoryCourseCount > 0) {
-          categoryData.coursesCount = categoryCourseCount;
-        }
-        return categoryData;
       })
     );
 
