@@ -36,8 +36,11 @@ const getCourses = async (req, res) => {
     }
 
     if (place) {
+      const decodedPlace = Array.isArray(place) 
+        ? place.map(p => decodeURIComponent(p))
+        : [decodeURIComponent(place)];
       query["schedules.location"] = {
-        $in: Array.isArray(place) ? place : [place],
+        $in: decodedPlace,
       };
     }
 
